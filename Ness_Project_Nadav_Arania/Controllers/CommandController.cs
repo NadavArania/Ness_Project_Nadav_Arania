@@ -62,7 +62,7 @@ namespace Ness_Project_Nadav_Arania.Controllers
                 Console.Clear();
                 if (list.Any())
                 {
-                    list.ForEach(option => Console.WriteLine(list.IndexOf(option) + "." + option.AssignmentTitle));
+                    list.ForEach(option => Console.WriteLine(list.IndexOf(option) + "." + option.AssignmentTitle + " "+ option.AssignmentDate.ToString("dd/MM/yyyy") + " " + option.AssignmentStatus));
                     Console.WriteLine("\n" + "Choose assignment index that you want to remove" + "\n");
                     assignment = Console.ReadLine();
                     if(assignment is not null)
