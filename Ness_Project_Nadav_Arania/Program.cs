@@ -6,13 +6,15 @@ CommandController commandController = new CommandController();
 do
 {
     Console.WriteLine("To Do List Menu:" + "\n");
-    commandController.list.ForEach(x => Console.WriteLine("Assignment Title: " + x.AssignmentTitle + "\n" + "Assignment Date: " + x.AssignmentDate + "\n" + "Assignment Status: " + x.AssignmentStatus + "\n" + "\n"));
+    commandController.list.ForEach(x => Console.WriteLine("Assignment Title: " + x.AssignmentTitle + "\n" + "Assignment Date: " + x.AssignmentDate.ToString("dd/MM/yyyy") + "\n" + "Assignment Status: " + x.AssignmentStatus + "\n" + "\n"));
     Console.WriteLine("\n");
     commandController.options.ForEach(option => Console.WriteLine(option));
     Console.WriteLine("\n" + "Write which command do you want to execute." + "\n");
     //Loop until write correct command to execute
     do
     {
+        commandController.keepGoing = true;
+        commandController.approved = false;
         commandController.choice = Console.ReadLine().ToLower();
         if (commandController.choice is not null && commandController.options.Any(x => x.ToLower() == commandController.choice))
         {
