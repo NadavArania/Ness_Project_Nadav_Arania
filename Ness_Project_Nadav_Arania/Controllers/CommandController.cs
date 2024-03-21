@@ -1,4 +1,5 @@
 ﻿using Ness_Project_Nadav_Arania.Contracts;
+using Ness_Project_Nadav_Arania.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,16 @@ namespace Ness_Project_Nadav_Arania.Controllers
 {
     public class CommandController : ICommands
     {
-        public List<string> list = new List<string>();
+        public List<Assignment> list = new List<Assignment>();
         public List<string> options = new List<string>() { "Add", "Remove", "Update", "Exit" };
         public bool keepGoing = true;
         public string choice;
         public bool approved = false;
         public string assignment;
-
+        public DateTime assignmentDate;
+        public string status = "Ongoing";
+        
+        //Add assignment to app
         public void AddAssignment()
         {
             try
@@ -25,7 +29,8 @@ namespace Ness_Project_Nadav_Arania.Controllers
                 assignment = Console.ReadLine();
                 if (assignment is not null)
                 {
-                    list.Add(assignment);
+                    Assignment newAssignment = new Assignment(assignment,DateTime.Now,status);
+                    list.Add(newAssignment);
                 }
                 else
                 {
@@ -39,6 +44,7 @@ namespace Ness_Project_Nadav_Arania.Controllers
             }
         }
 
+        //Remove assignment from app
         public void RemoveAssignment()
         {
             try
@@ -46,13 +52,13 @@ namespace Ness_Project_Nadav_Arania.Controllers
                 Console.Clear();
                 if (list.Any())
                 {
-                    list.ForEach(option => Console.WriteLine(list.IndexOf(option) + "." + option.ToString()));
-                    Console.WriteLine("Choose assignment index that you want to remove" + "\n");
+                    list.ForEach(option => Console.WriteLine(list.IndexOf(option) + "." + option.AssignmentTitle));
+                    Console.WriteLine("\n" + "Choose assignment index that you want to remove" + "\n");
                     assignment = Console.ReadLine();
                     int convertedRemoveAssignment = Convert.ToInt32(assignment);
                     if (list.Any(x => x == list[convertedRemoveAssignment]))
                     {
-                        string assignmentToRemove = list[convertedRemoveAssignment];
+                        Assignment assignmentToRemove = list[convertedRemoveAssignment];
                         list.Remove(assignmentToRemove);
                     }
                     else
@@ -72,6 +78,7 @@ namespace Ness_Project_Nadav_Arania.Controllers
             }
         }
 
+        //Update assignment in app
         public void UpdateAssignment()
         {
             try
@@ -79,17 +86,30 @@ namespace Ness_Project_Nadav_Arania.Controllers
                 Console.Clear();
                 if (list.Any())
                 {
-                    list.ForEach(option => Console.WriteLine(list.IndexOf(option) + "." + option.ToString()));
-                    Console.WriteLine("Choose assignment index that you want to update" + "\n");
+                    list.ForEach(option => Console.WriteLine(list.IndexOf(option) + "." + option.AssignmentTitle));
+                    Console.WriteLine("\n" + "Choose assignment index that you want to update" + "\n");
                     assignment = Console.ReadLine();
                     int convertedUpdateAssignment = Convert.ToInt32(assignment);
                     if (list.Any(x => x == list[convertedUpdateAssignment]))
                     {
-                        Console.WriteLine("\n" + "Write assignment." + "\n");
+                        Console.WriteLine("\n" + "Assignments is done?" + "\n");
                         choice = Console.ReadLine();
                         if (choice is not null)
                         {
-                            list[convertedUpdateAssignment] = choice;
+                            switch (choice)
+                            {
+                                case "no":
+                                    Console.Clear();
+                                    break;
+                                case "yes":
+                                    list[convertedUpdateAssignment].AssignmentStatus = "Done";
+                                    list[convertedUpdateAssignment].AssignmentDate = DateTime.Now;
+                                    Console.Clear();
+                                    break;
+                                default:
+                                    Console.Clear();
+                                    break;
+                            }
                         }
                     }
                     else

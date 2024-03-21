@@ -6,7 +6,7 @@ CommandController commandController = new CommandController();
 do
 {
     Console.WriteLine("To Do List Menu:" + "\n");
-    commandController.list.ForEach(x => Console.WriteLine(x));
+    commandController.list.ForEach(x => Console.WriteLine("Assignment Title: " + x.AssignmentTitle + "\n" + "Assignment Date: " + x.AssignmentDate + "\n" + "Assignment Status: " + x.AssignmentStatus + "\n" + "\n"));
     Console.WriteLine("\n");
     commandController.options.ForEach(option => Console.WriteLine(option));
     Console.WriteLine("\n" + "Write which command do you want to execute." + "\n");
